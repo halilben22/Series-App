@@ -13,7 +13,7 @@ class SeriesViewModel @Inject constructor(private val repository: SeriesReposito
 
    private val allSeriesLiveData: MutableLiveData<PopularSeriesData> = MutableLiveData()
    private val searchSeriesLiveData: MutableLiveData<PopularSeriesData> = MutableLiveData()
-
+  var isProgressBarVisible: Boolean = false
 
    fun observeSeries(): MutableLiveData<PopularSeriesData> {
 

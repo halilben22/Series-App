@@ -1,6 +1,7 @@
 package com.example.animeapp.service
 
 import com.example.animeapp.models.PopularSeriesData
+import com.example.animeapp.models.TvShow
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query

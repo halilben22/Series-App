@@ -10,8 +10,11 @@ plugins {
 android {
    namespace = "com.example.animeapp"
    compileSdk = 33
-
+   buildFeatures {
+      viewBinding = true
+   }
    defaultConfig {
+
       applicationId = "com.example.animeapp"
       minSdk = 24
       targetSdk = 33
@@ -40,6 +43,8 @@ android {
 }
 
 dependencies {
+
+
    val lifecycle_version = "2.6.1"
    annotationProcessor( "com.google.dagger:hilt-compiler:2.47")
    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version")

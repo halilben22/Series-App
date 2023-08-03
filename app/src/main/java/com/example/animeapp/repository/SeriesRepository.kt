@@ -1,7 +1,11 @@
 package com.example.animeapp.repository
 
+import android.view.View
+import android.widget.ProgressBar
 import androidx.lifecycle.MutableLiveData
+import com.example.animeapp.R
 import com.example.animeapp.models.PopularSeriesData
+import com.example.animeapp.models.TvShow
 import com.example.animeapp.service.AniApi
 import retrofit2.Call
 import retrofit2.Callback
