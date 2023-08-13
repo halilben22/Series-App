@@ -4,6 +4,47 @@
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
     </style>
-
     <style name="Theme.AnimeApp" parent="Base.Theme.AnimeApp" />
+
+
+    ////////////////////////////////////////////////////////////////
+<style name="ScreenBackground">
+    <item name="android:background">@color/orange_light</item>
+</style>
+
+    <style name="SearchBarBackground">
+        <item name="android:background">@color/grey_tone</item>
+    </style>
+    <style name="TextColor">
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="FavCardBackgroundColor">
+        <item name="android:backgroundTint">@color/purple_lighter</item>
+
+    </style>
+
+    <style name="ImageBackgroundColor">
+        <item name="android:backgroundTint">@color/grey_tone</item>
+
+
+    </style>
+
+    <style name="ButtonColors">
+        <item name="android:backgroundTint">@color/purple_darker</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="BottomBarColor">
+        <item name="backgroundTint">@color/purple_darker</item>
+        <item name="itemIconTint">@color/white</item>
+
+    </style>
+
+
+
+/////////////////////////////////////////////////////////////
+
+
+
 </resources>

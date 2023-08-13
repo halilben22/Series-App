@@ -1,6 +1,10 @@
 package com.example.animeapp.module
 
+import android.app.Application
 import com.example.animeapp.constants.Constants.baseUrl
+import com.example.animeapp.db.dao.FavoriteDao
+import com.example.animeapp.db.database.FavoriteDatabase
+
 import com.example.animeapp.service.AniApi
 import dagger.Module
 import dagger.Provides
@@ -14,6 +18,19 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object AppModule {
+
+   @Singleton
+   @Provides
+   fun getAppDBFav(context: Application): FavoriteDatabase{
+      return FavoriteDatabase.getAppDB(context)
+   }
+
+
+   @Singleton
+   @Provides
+   fun getFavDao(appDB:FavoriteDatabase): FavoriteDao {
+      return appDB.getDao()
+   }
 
 
    @Singleton

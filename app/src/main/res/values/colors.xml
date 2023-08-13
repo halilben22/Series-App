@@ -2,4 +2,24 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="purple_light">#fffbaed2</color>
+    <color name="purple_dark">#880085</color>
+    <color name="white_tone">#d8dfbd</color>
+    <color name="pink_light">#e0c9c4</color>
+    <color name="purple_lighter">#c296c6</color>
+    <color name="blue_lighter">#8fa4bc</color>
+    <color name="orange_light">#fff2efe4</color>
+    <color name="grey_tone">#FFD9D9D9</color>
+
+
+    ///For Dark Theme
+    <color name="purple_dark2">#461959</color>
+    <color name="purple_darker">#301934</color>
+    <color name="purple_darker2">#5F3067</color>
+    <color name="purple_lighter2">#CD6688</color>
+    <color name="green_tone">#AED8CC</color>
+
+
+
+
 </resources>

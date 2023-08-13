@@ -22,7 +22,9 @@ class SeriesRepository @Inject constructor(private val seriesApi: AniApi) {
             response: Response<PopularSeriesData>
          ) {
             if (response.isSuccessful){
+
                liveData.postValue(response.body())
+
             }
          }
 

@@ -4,50 +4,58 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#fff2efe4"
 
+    style="@style/ScreenBackground"
     tools:context=".view.fragments.SearchFragment">
+
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintTop_toTopOf="parent">
 
 
         <androidx.appcompat.widget.SearchView
-         app:queryBackground="@null"
-            android:background="#FFD9D9D9"
-            app:iconifiedByDefault="false"
+
             android:id="@+id/searchBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
+            style="@style/SearchBarBackground"
+            app:iconifiedByDefault="false"
+            app:queryBackground="@null"
+
+
             app:queryHint="search series...">
 
         </androidx.appcompat.widget.SearchView>
 
-        <ProgressBar
-            android:id="@+id/progressBar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:visibility="gone"
-
-            >
-
-        </ProgressBar>
 
         <androidx.recyclerview.widget.RecyclerView
-
-            android:id="@+id/recyclerSeries"
+            android:id="@+id/recyclerPages"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0" />
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="18dp"
+            android:layout_marginVertical="5dp"
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+
+            />
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerSeries"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0" />
 
     </LinearLayout>
 

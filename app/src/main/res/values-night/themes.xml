@@ -4,4 +4,40 @@
         <!-- Customize your dark theme here. -->
         <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
     </style>
+
+    <style name="ScreenBackground">
+        <item name="android:background">@color/purple_dark2</item>
+    </style>
+
+    <style name="SearchBarBackground">
+        <item name="android:background">@color/purple_darker</item>
+        <item name="android:textColorHint">@color/white</item>
+    </style>
+    <style name="TextColor">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="FavCardBackgroundColor">
+        <item name="android:backgroundTint">@color/purple_darker2</item>
+
+    </style>
+
+    <style name="ImageBackgroundColor">
+        <item name="android:backgroundTint">@color/purple_darker</item>
+
+
+    </style>
+
+    <style name="ButtonColors">
+        <item name="android:backgroundTint">@color/purple_darker</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="BottomBarColor">
+        <item name="backgroundTint">@color/purple_darker</item>
+        <item name="itemIconTint">@color/white</item>
+
+    </style>
+
+
 </resources>

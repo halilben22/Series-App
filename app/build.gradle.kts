@@ -55,6 +55,17 @@ dependencies {
    //navigation
    implementation("androidx.navigation:navigation-fragment-ktx:2.6.0")
    implementation("androidx.navigation:navigation-ui-ktx:2.6.0")
+
+
+
+   val room_version = "2.5.2"
+
+   implementation("androidx.room:room-runtime:$room_version")
+   annotationProcessor("androidx.room:room-compiler:$room_version")
+
+   // To use Kotlin annotation processing tool (kapt)
+   kapt("androidx.room:room-compiler:$room_version")
+   implementation ("androidx.room:room-ktx:2.5.2")
    // retrofit
 
    implementation("com.squareup.retrofit2:retrofit:2.9.0")

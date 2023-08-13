@@ -8,8 +8,12 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.animeapp.databinding.FragmentSearchBinding
+import com.example.animeapp.models.FavoriteData
+import com.example.animeapp.models.PageData
 import com.example.animeapp.models.PopularSeriesData
+import com.example.animeapp.view.adapters.PagesAdapter
 import com.example.animeapp.view.adapters.SeriesAdapter
+import com.example.animeapp.viewmodel.FavoritesViewModel
 import com.example.animeapp.viewmodel.SeriesViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
@@ -27,10 +31,18 @@ class SearchFragment : Fragment() {
 
    private var listAllSeries: ArrayList<PopularSeriesData> = arrayListOf()
    private var listSearched: ArrayList<PopularSeriesData> = arrayListOf()
+   private var favList: MutableList<FavoriteData> = mutableListOf()
    private lateinit var seriesAdapter: SeriesAdapter
+   val pagesList: ArrayList<PageData> = arrayListOf()
+   private lateinit var pagesAdapter: PagesAdapter
    private val viewModel by lazy {
       ViewModelProvider(this, defaultViewModelProviderFactory)[SeriesViewModel::class.java]
    }
+
+   private val favViewModel by lazy {
+      ViewModelProvider(this, defaultViewModelProviderFactory)[FavoritesViewModel::class.java]
+   }
+
 
    override fun onCreateView(
       inflater: LayoutInflater, container: ViewGroup?,
@@ -38,19 +50,53 @@ class SearchFragment : Fragment() {
    ): View {
       _binding = FragmentSearchBinding.inflate(inflater, container, false)
       val view = binding.root
-
       getDatas()
+      favViewModel.readFavorites()
 
+
+      pagesList.add(PageData(1))
+      pagesList.add(PageData(2))
+      pagesList.add(PageData(3))
+      pagesList.add(PageData(4))
+      pagesList.add(PageData(5))
+      pagesList.add(PageData(6))
+      pagesList.add(PageData(7))
+      pagesList.add(PageData(8))
+      pagesList.add(PageData(9))
+      pagesList.add(PageData(10))
+
+      favViewModel.favoriteObserver().observe(requireActivity()) {
+         favList = it
+
+      }
+
+      pagesAdapter = PagesAdapter(viewModel, favViewModel, favList)
+      pagesAdapter.setList(pagesList)
+      binding.recyclerPages.adapter = pagesAdapter
 
       viewModel.observeSeries().observe(viewLifecycleOwner) {
          listAllSeries.add(it)
-         seriesAdapter = SeriesAdapter()
-         seriesAdapter.setList(listAllSeries)
+         seriesAdapter = SeriesAdapter(favViewModel, lifecycle)
+
+         seriesAdapter.setList(listAllSeries, favList)
+
+
          binding.recyclerSeries.adapter = seriesAdapter
+
          binding.recyclerSeries.layoutManager =
             GridLayoutManager(activity, 2)
 
       }
+
+      viewModel.observeSearchSeries().observe(viewLifecycleOwner) {
+         listSearched.add(it)
+         seriesAdapter = SeriesAdapter(favViewModel, lifecycle)
+         seriesAdapter.setList(listSearched, favList)
+         binding.recyclerSeries.adapter = seriesAdapter
+         binding.recyclerSeries.layoutManager =
+            GridLayoutManager(activity, 2)
+      }
+
 
 
 
@@ -61,70 +107,42 @@ class SearchFragment : Fragment() {
          }
 
          override fun onQueryTextChange(p0: String?): Boolean {
-            if (p0 == ""){
+            if (p0 == "") {
                getDatas()
-            }
-            else {
+            } else {
                CoroutineScope(Dispatchers.IO).launch {
                   val job1: Deferred<Unit> = async {
-
-
                      viewModel.getAllSearchedSeries(p0!!.lowercase())
+                  }
 
-
+                  val job2: Deferred<Unit> = async {
+                     favViewModel.readFavorites()
                   }
 
                   job1.await()
-
+                  job2.await()
                }
             }
-            viewModel.observeSearchSeries().observe(viewLifecycleOwner) {
-               listSearched.add(it)
-               seriesAdapter = SeriesAdapter()
-               seriesAdapter.setList(listSearched)
-               binding.recyclerSeries.adapter = seriesAdapter
-               binding.recyclerSeries.layoutManager =
-                  GridLayoutManager(activity, 2)
-            }
+
 
 
             return true
          }
-
       })
-
 
       return view
 
-
    }
-
-
-
-
-
 
    private fun getDatas() {
       CoroutineScope(Dispatchers.IO).launch {
          val job1: Deferred<Unit> = async {
-            viewModel.getAllSeries("3")
-
-            println(listAllSeries)
-
-         }
-
-         val job2: Deferred<Unit> = async {
-            viewModel.getAllSearchedSeries("flash")
-
-
+            viewModel.getAllSeries("1")
          }
 
          job1.await()
-         job2.await()
 
       }
-
-
    }
 
 
