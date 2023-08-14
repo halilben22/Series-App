@@ -1,11 +1,18 @@
 package com.example.animeapp.view.adapters
 
 import android.annotation.SuppressLint
+import android.app.Dialog
+import android.content.Context
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -21,7 +28,8 @@ import kotlinx.coroutines.launch
 
 class FavoritesAdapter constructor(
    val favoritesViewModel: FavoritesViewModel,
-   val clearButton: Button
+   val clearButton: Button,
+   val context: Context
 ) :
    RecyclerView.Adapter<FavoritesAdapter.FavoritesViewHolder>() {
    class FavoritesViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
@@ -74,7 +82,7 @@ class FavoritesAdapter constructor(
       holder.bindData(favList!![position])
       clearAll(holder)
       deleteFavorite(position, holder)
-
+showDialog(holder)
 
    }
 
@@ -117,4 +125,22 @@ class FavoritesAdapter constructor(
       }
 
    }
-}
+
+
+
+   private fun showDialog(holder: FavoritesViewHolder){
+
+      val button=holder.view.findViewById<LinearLayout>(R.id.add_comment)
+      button.setOnClickListener {
+         val dialog=Dialog(context)
+         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+         dialog.setContentView(R.layout.fav_bottom_sheet)
+         dialog.show()
+         dialog.window!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT)
+         dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+         dialog.window!!.attributes.windowAnimations = R.style.DialogAnimation
+         dialog.window!!.setGravity(Gravity.BOTTOM)
+      }
+
+   }
+   }

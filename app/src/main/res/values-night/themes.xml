@@ -22,6 +22,14 @@
 
     </style>
 
+    <style name="CommentBackgroundColor">
+        <item name="android:color">@color/purple_light</item>
+
+    </style>
+    <style name="CommentCardTextColor">
+        <item name="android:textColor">@color/black</item>
+    </style>
+
     <style name="ImageBackgroundColor">
         <item name="android:backgroundTint">@color/purple_darker</item>
 

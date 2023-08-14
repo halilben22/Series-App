@@ -44,7 +44,7 @@ class FavoritesFragment : Fragment() {
       val view = binding.root
       getFavoriteDatas()
       val clearButton = binding.clearButton
-      favoritesAdapter = FavoritesAdapter(favViewModel, clearButton)
+      favoritesAdapter = FavoritesAdapter(favViewModel, clearButton,activity!!)
 
 
       favViewModel.favoriteObserver().observe(requireActivity()) {
