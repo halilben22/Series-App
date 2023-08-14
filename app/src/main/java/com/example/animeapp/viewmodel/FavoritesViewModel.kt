@@ -36,7 +36,11 @@ class FavoritesViewModel @Inject constructor(private val dao: FavoriteDao) : Vie
 
    fun deleteAllFavorites() {
       dao.deleteAllFavorite()
-readFavorites()
+      readFavorites()
+   }
+
+   fun updateComment(comment: String, id: String) {
+      dao.updateFavoriteComment(comment, id)
    }
 
 }

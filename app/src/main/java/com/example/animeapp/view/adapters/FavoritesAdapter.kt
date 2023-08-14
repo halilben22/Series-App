@@ -11,9 +11,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import android.widget.Button
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.animeapp.R
@@ -25,16 +27,18 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class FavoritesAdapter constructor(
    val favoritesViewModel: FavoritesViewModel,
    val clearButton: Button,
+
    val context: Context
 ) :
    RecyclerView.Adapter<FavoritesAdapter.FavoritesViewHolder>() {
    class FavoritesViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
 
-
+      val comment_button = view.findViewById<LinearLayout>(R.id.add_comment)
       val detail_title = view.findViewById<TextView>(R.id.detail_title)
       val detail_start = view.findViewById<TextView>(R.id.detail_start)
       val detail_country = view.findViewById<TextView>(R.id.detail_country)
@@ -44,6 +48,7 @@ class FavoritesAdapter constructor(
 
       @SuppressLint("SetTextI18n")
       fun bindData(data: FavoriteData) {
+
          detail_title.text = "Name: " + data.name
          detail_start.text = "Start date: " + data.start_date
          detail_country.text = "Country: " + data.country
@@ -80,13 +85,13 @@ class FavoritesAdapter constructor(
 
    override fun onBindViewHolder(holder: FavoritesViewHolder, position: Int) {
       holder.bindData(favList!![position])
-      clearAll(holder)
+      clearAll()
       deleteFavorite(position, holder)
-showDialog(holder)
+      showDialog(holder, position)
 
    }
 
-   private fun clearAll(holder: FavoritesViewHolder) {
+   private fun clearAll() {
 
       clearButton.setOnClickListener {
 
@@ -121,26 +126,55 @@ showDialog(holder)
          }
 
 
-
       }
 
    }
 
 
+   private fun showDialog(holder: FavoritesViewHolder, position: Int) {
 
-   private fun showDialog(holder: FavoritesViewHolder){
 
-      val button=holder.view.findViewById<LinearLayout>(R.id.add_comment)
-      button.setOnClickListener {
-         val dialog=Dialog(context)
+      holder.comment_button.setOnClickListener {
+         val dialog = Dialog(context)
          dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
          dialog.setContentView(R.layout.fav_bottom_sheet)
+         val comment_add_btn = dialog.findViewById<Button>(R.id.comment_button)
+         val comment_text = dialog.findViewById<EditText>(R.id.comment_text)
+         comment_text.setText(favList!![position].comment)
          dialog.show()
-         dialog.window!!.setLayout(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT)
+
+         dialog.window!!.setLayout(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+         )
          dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
          dialog.window!!.attributes.windowAnimations = R.style.DialogAnimation
          dialog.window!!.setGravity(Gravity.BOTTOM)
+
+         comment_add_btn.setOnClickListener {
+            CoroutineScope(Dispatchers.IO).launch {
+               favoritesViewModel.updateComment(
+                  comment_text.text.toString(),
+                  favList!![position].id
+               )
+               favoritesViewModel.readFavorites()
+               withContext(Dispatchers.Main) {
+                  Toast.makeText(
+                     context,
+                     "${favList!![position].name} ile ilgili notunuz eklendi.",
+                     Toast.LENGTH_SHORT
+                  ).show()
+
+               }
+
+
+            }
+
+
+         }
       }
 
    }
-   }
+
+
+}

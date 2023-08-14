@@ -15,7 +15,6 @@ data class FavoriteData(
    val start_date:String,
    val country:String,
    val status:String,
-   val path:String
-){
-
-}
+   val path:String,
+   val comment:String
+)

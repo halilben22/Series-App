@@ -43,6 +43,16 @@
         <item name="android:textColor">@color/white</item>
     </style>
 
+    <style name="CommentButtonColor">
+        <item name="android:backgroundTint">@color/purple_darker</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="CommentCardBackgroundColor">
+        <item name="android:color">@color/white</item>
+    </style>
+
+
     <style name="BottomBarColor">
         <item name="backgroundTint">@color/purple_darker</item>
         <item name="itemIconTint">@color/white</item>

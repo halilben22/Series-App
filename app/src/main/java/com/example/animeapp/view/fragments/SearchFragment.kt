@@ -28,7 +28,8 @@ class SearchFragment : Fragment() {
    private var _binding: FragmentSearchBinding? = null
 
    private val binding get() = _binding!!
-
+   private var job1:Deferred<Unit>?=null
+   private var job2:Deferred<Unit>?=null
    private var listAllSeries: ArrayList<PopularSeriesData> = arrayListOf()
    private var listSearched: ArrayList<PopularSeriesData> = arrayListOf()
    private var favList: MutableList<FavoriteData> = mutableListOf()
@@ -111,16 +112,17 @@ class SearchFragment : Fragment() {
                getDatas()
             } else {
                CoroutineScope(Dispatchers.IO).launch {
-                  val job1: Deferred<Unit> = async {
+                  job2= async {
+                     favViewModel.readFavorites()
+                  }
+                   job1 = async {
                      viewModel.getAllSearchedSeries(p0!!.lowercase())
                   }
 
-                  val job2: Deferred<Unit> = async {
-                     favViewModel.readFavorites()
-                  }
+                  job2!!.await()
 
-                  job1.await()
-                  job2.await()
+                  job1!!.await()
+
                }
             }
 
@@ -145,5 +147,18 @@ class SearchFragment : Fragment() {
       }
    }
 
+   override fun onDestroy() {
+      super.onDestroy()
+      job1?.cancel()
+      job2?.cancel()
+
+   }
+
+   override fun onDestroyView() {
+      super.onDestroyView()
+
+      job1?.cancel()
+      job2?.cancel()
+   }
 
 }

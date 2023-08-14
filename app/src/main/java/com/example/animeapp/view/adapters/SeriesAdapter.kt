@@ -32,9 +32,6 @@ class SeriesAdapter(private val favViewModel: FavoritesViewModel, override val l
       val posterImage = view.findViewById<ImageView>(R.id.posterView)
       val favButton = view.findViewById<ImageView>(R.id.fav_item_logo)//SIKINTI BURDA
 
-      val cardItem = view.findViewById<CardView>(R.id.cardItem)
-      val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerSeries)
-
 
       @SuppressLint("SetTextI18n")
       fun bindData(data: TvShow) {
@@ -71,9 +68,9 @@ class SeriesAdapter(private val favViewModel: FavoritesViewModel, override val l
    }
 
    override fun onBindViewHolder(holder: SeriesViewHolder, position: Int) {
-
-      holder.bindData(seriesList!![position])
       holder.setIsRecyclable(false)
+      holder.bindData(seriesList!![position])
+
       findFavorite(position, holder)
       addFavorite(position, holder)
 
@@ -116,7 +113,8 @@ class SeriesAdapter(private val favViewModel: FavoritesViewModel, override val l
                      start_date = seriesList?.get(position)?.start_date ?: "-",
                      country = seriesList!![position].country,
                      status = seriesList!![position].status,
-                     path = seriesList!![position].image_thumbnail_path
+                     path = seriesList!![position].image_thumbnail_path,
+                     comment = ""
                   )
                )
 

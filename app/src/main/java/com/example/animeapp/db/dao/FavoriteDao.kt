@@ -25,5 +25,8 @@ interface FavoriteDao {
    @Query("DELETE FROM favorites")
    fun deleteAllFavorite()
 
+   @Query("UPDATE favorites SET comment=:comment WHERE id=:id")
+   fun updateFavoriteComment(comment:String,id:String)
+
 
 }
