@@ -89,6 +89,37 @@
                     android:layout_marginVertical="1dp"
                     android:text="Status:" />
 
+               <LinearLayout
+                   android:id="@+id/add_comment"
+                   android:clickable="true"
+                   android:layout_marginTop="15dp"
+                   android:background="@drawable/comment_radius"
+                   android:layout_width="wrap_content"
+
+                   android:layout_height="wrap_content"
+                   android:orientation="horizontal">
+
+
+                   <TextView
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:textSize="9sp"
+                       style="@style/TextColor"
+                       android:layout_marginStart="5dp"
+                       android:gravity="center"
+                       android:text="your comment">
+
+                   </TextView>
+
+                   <ImageView
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+
+                       android:src="@drawable/baseline_keyboard_arrow_right_24" />
+
+
+               </LinearLayout>
+
 
             </LinearLayout>
 
@@ -96,6 +127,7 @@
                 android:id="@+id/heart_button"
                 android:layout_width="33dp"
                 android:layout_height="33dp"
+                android:clickable="true"
 
                 android:layout_alignParentEnd="true"
                 android:layout_marginStart="262dp"
