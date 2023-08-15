@@ -11,7 +11,7 @@ import com.example.animeapp.databinding.FragmentSearchBinding
 import com.example.animeapp.models.FavoriteData
 import com.example.animeapp.models.PageData
 import com.example.animeapp.models.PopularSeriesData
-import com.example.animeapp.utils.SeriesAdapterMethodImpl
+import com.example.animeapp.utils.methods.SeriesAdapterMethodImpl
 import com.example.animeapp.view.adapters.PagesAdapter
 import com.example.animeapp.view.adapters.SeriesAdapter
 import com.example.animeapp.viewmodel.FavoritesViewModel
@@ -36,7 +36,7 @@ class SearchFragment : Fragment() {
    private var favList: MutableList<FavoriteData> = mutableListOf()
    private lateinit var seriesAdapter: SeriesAdapter
    val pagesList: ArrayList<PageData> = arrayListOf()
-   private var seriesAdapterMethodImpl=SeriesAdapterMethodImpl()
+   private var seriesAdapterMethodImpl= SeriesAdapterMethodImpl()
    private lateinit var pagesAdapter: PagesAdapter
    private val viewModel by lazy {
       ViewModelProvider(this, defaultViewModelProviderFactory)[SeriesViewModel::class.java]

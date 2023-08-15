@@ -13,24 +13,28 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.animeapp.R
 import com.example.animeapp.models.FavoriteData
-import com.example.animeapp.utils.FavoriteMethodsImpl
+import com.example.animeapp.utils.methods.FavoriteMethodsImpl
 import com.example.animeapp.viewmodel.FavoritesViewModel
+
 
 class FavoritesAdapter constructor(
    private val favoritesViewModel: FavoritesViewModel,
    private val clearButton: Button,
    val context: Context,
-   val favoriteMethodsImpl: FavoriteMethodsImpl
-) :
+   val favoriteMethodsImpl: FavoriteMethodsImpl,
+
+   ) :
    RecyclerView.Adapter<FavoritesAdapter.FavoritesViewHolder>() {
    class FavoritesViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
 
-      val comment_button = view.findViewById<LinearLayout>(R.id.add_comment)
-      val detail_title = view.findViewById<TextView>(R.id.detail_title)
-      val detail_start = view.findViewById<TextView>(R.id.detail_start)
-      val detail_country = view.findViewById<TextView>(R.id.detail_country)
-      val detail_status = view.findViewById<TextView>(R.id.detail_status)
-      val posterFav = view.findViewById<ImageView>(R.id.posterFav)
+      val comment_button = view.findViewById<LinearLayout>(com.example.animeapp.R.id.add_comment)
+      val detail_title = view.findViewById<TextView>(com.example.animeapp.R.id.detail_title)
+      val detail_start = view.findViewById<TextView>(com.example.animeapp.R.id.detail_start)
+      val detail_country = view.findViewById<TextView>(com.example.animeapp.R.id.detail_country)
+      val detail_status = view.findViewById<TextView>(com.example.animeapp.R.id.detail_status)
+      val posterFav = view.findViewById<ImageView>(com.example.animeapp.R.id.posterFav)
+      val rate_text = view.findViewById<TextView>(R.id.rate_text)
+      val rate_button = view.findViewById<LinearLayout>(R.id.rate_button)
 
 
       @SuppressLint("SetTextI18n")
@@ -40,6 +44,7 @@ class FavoritesAdapter constructor(
          detail_start.text = "Start date: " + data.start_date
          detail_country.text = "Country: " + data.country
          detail_status.text = "Status: " + data.status
+         rate_text.text = data.rate + "/10"
          val path = data.path
 
 
@@ -62,7 +67,8 @@ class FavoritesAdapter constructor(
    }
 
    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavoritesViewHolder {
-      val view = LayoutInflater.from(parent.context).inflate(R.layout.fav_items, parent, false)
+      val view = LayoutInflater.from(parent.context)
+         .inflate(R.layout.fav_items, parent, false)
       return FavoritesViewHolder(view)
    }
 
@@ -76,8 +82,9 @@ class FavoritesAdapter constructor(
       favoriteMethodsImpl.clearAllFavorites(clearButton, favoritesViewModel)
       favoriteMethodsImpl.deleteFavorite(position, holder, favoritesViewModel, favList!!)
       favoriteMethodsImpl.showDialog(position, holder, favoritesViewModel, favList!!, context)
-
+      favoriteMethodsImpl.showRateDialog(position, holder, favoritesViewModel, favList!!, context)
    }
 
-
 }
+
+

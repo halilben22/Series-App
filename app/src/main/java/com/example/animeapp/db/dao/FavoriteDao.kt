@@ -29,4 +29,8 @@ interface FavoriteDao {
    fun updateFavoriteComment(comment:String,id:String)
 
 
+   @Query("UPDATE favorites SET rate=:rate WHERE id=:id")
+   fun updateFavoriteRate(rate:String,id:String)
+
+
 }

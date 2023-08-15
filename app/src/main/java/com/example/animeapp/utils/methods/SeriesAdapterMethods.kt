@@ -1,4 +1,4 @@
-package com.example.animeapp.utils
+package com.example.animeapp.utils.methods
 
 import com.example.animeapp.models.FavoriteData
 import com.example.animeapp.models.TvShow

@@ -43,4 +43,8 @@ class FavoritesViewModel @Inject constructor(private val dao: FavoriteDao) : Vie
       dao.updateFavoriteComment(comment, id)
    }
 
+   fun updateRate(rate: String, id: String) {
+      dao.updateFavoriteRate(rate, id)
+   }
+
 }

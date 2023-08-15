@@ -1,15 +1,17 @@
-package com.example.animeapp.utils
+package com.example.animeapp.utils.methods
 
 import android.app.Dialog
 import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.view.Gravity
+import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.view.Window
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.NumberPicker
 import android.widget.Toast
 import com.example.animeapp.R
 import com.example.animeapp.models.FavoriteData
@@ -74,7 +76,7 @@ class FavoriteMethodsImpl : FavoriteMethods {
             CoroutineScope(Dispatchers.IO).launch {
                favoritesViewModel.updateComment(
                   comment_text.text.toString(),
-                  favList!![position].id
+                  favList[position].id
                )
                favoritesViewModel.readFavorites()
 
@@ -82,7 +84,7 @@ class FavoriteMethodsImpl : FavoriteMethods {
                withContext(Dispatchers.Main) {
                   Toast.makeText(
                      context,
-                     "${favList!![position].name} ile ilgili notunuz eklendi.",
+                     "${favList[position].name} ile ilgili notunuz eklendi.",
                      Toast.LENGTH_SHORT
                   ).show()
 
@@ -100,6 +102,41 @@ class FavoriteMethodsImpl : FavoriteMethods {
       clearButton.setOnClickListener {
 
          favoritesViewModel.deleteAllFavorites()
+
+
+      }
+   }
+
+   override fun showRateDialog(
+      position: Int,
+      holder: FavoritesAdapter.FavoritesViewHolder,
+      favoritesViewModel: FavoritesViewModel,
+      favList: List<FavoriteData>,
+      context: Context
+   ) {
+      holder.rate_button.setOnClickListener {
+         val builder = Dialog(context)
+         val inflater = LayoutInflater.from(context)
+         val dialogLayout = inflater.inflate(R.layout.number_picker_dialog, null)
+         val done_button = dialogLayout.findViewById<Button>(R.id.rate_done_button)
+         val numberPicker = dialogLayout.findViewById<NumberPicker>(R.id.dialog_number_picker)
+         numberPicker.minValue = 0
+         numberPicker.maxValue = 10
+         //numberPicker.textColor=Color
+         with(builder) {
+            setContentView(dialogLayout)
+            builder.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            show()
+
+            done_button.setOnClickListener {
+
+               favoritesViewModel.updateRate(numberPicker.value.toString(), favList!![position].id)
+               favoritesViewModel.readFavorites()
+
+               cancel()
+            }
+
+         }
 
 
       }

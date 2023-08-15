@@ -65,9 +65,7 @@ val favList:MutableList<FavoriteData>
                viewModel.getAllSeries(pagesList!![position].pageNumber.toString())
             }
 
-
-
-      favViewModel.readFavorites()
+            favViewModel.readFavorites()
 
 
 

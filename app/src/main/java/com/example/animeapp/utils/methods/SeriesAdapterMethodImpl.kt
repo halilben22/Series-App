@@ -1,4 +1,4 @@
-package com.example.animeapp.utils
+package com.example.animeapp.utils.methods
 
 import android.widget.ImageView
 import com.example.animeapp.R
@@ -35,7 +35,7 @@ class SeriesAdapterMethodImpl: SeriesAdapterMethods {
    override fun addFavorite(
       position: Int,
       holder: SeriesAdapter.SeriesViewHolder,
-      favViewModel: FavoritesViewModel,
+      favoritesViewModel: FavoritesViewModel,
       seriesList:List<TvShow>
    ) {
       val favButton = holder.view.findViewById<ImageView>(R.id.fav_item_logo)
@@ -44,7 +44,7 @@ class SeriesAdapterMethodImpl: SeriesAdapterMethods {
          CoroutineScope(Dispatchers.IO).launch {
 
             val job1: Deferred<Unit> = async {
-               favViewModel.addFavorite(
+               favoritesViewModel.addFavorite(
                   FavoriteData(
                      id = seriesList[position].id.toString(),
                      name = seriesList[position].name,
@@ -56,7 +56,7 @@ class SeriesAdapterMethodImpl: SeriesAdapterMethods {
                      status = seriesList[position].status,
                      path = seriesList[position].image_thumbnail_path,
                      comment = "",
-                     rate = "not rated."
+                     rate = ""
                   )
                )
 

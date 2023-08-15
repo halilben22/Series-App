@@ -1,4 +1,4 @@
-package com.example.animeapp.utils
+package com.example.animeapp.utils.methods
 
 import android.content.Context
 import android.widget.Button
@@ -12,4 +12,7 @@ interface FavoriteMethods {
    fun showDialog(position: Int,holder: FavoritesAdapter.FavoritesViewHolder,favoritesViewModel:FavoritesViewModel,favList:List<FavoriteData>,context: Context)
 
    fun clearAllFavorites(clearButton:Button,favoritesViewModel: FavoritesViewModel)
+
+   fun showRateDialog(position: Int,holder: FavoritesAdapter.FavoritesViewHolder,favoritesViewModel:FavoritesViewModel,favList:List<FavoriteData>,context: Context)
+
 }

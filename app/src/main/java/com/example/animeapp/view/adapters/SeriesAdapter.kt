@@ -14,13 +14,13 @@ import com.example.animeapp.R
 import com.example.animeapp.models.FavoriteData
 import com.example.animeapp.models.PopularSeriesData
 import com.example.animeapp.models.TvShow
-import com.example.animeapp.utils.SeriesAdapterMethodImpl
+import com.example.animeapp.utils.methods.SeriesAdapterMethodImpl
 import com.example.animeapp.viewmodel.FavoritesViewModel
 
 class SeriesAdapter(
    private val favViewModel: FavoritesViewModel,
    override val lifecycle: Lifecycle,
-   val seriesAdapterMethodImpl: SeriesAdapterMethodImpl
+   private val seriesAdapterMethodImpl: SeriesAdapterMethodImpl
 ) :
    RecyclerView.Adapter<SeriesAdapter.SeriesViewHolder>(), LifecycleOwner {
 
@@ -34,10 +34,9 @@ class SeriesAdapter(
 
       @SuppressLint("SetTextI18n")
       fun bindData(data: TvShow) {
-         val path: String
          textTitle.text = data.name
          textDate.text = data.start_date
-         path = data.image_thumbnail_path
+         val path: String = data.image_thumbnail_path
 
          Glide.with(posterImage).load(path)
             .into(posterImage)

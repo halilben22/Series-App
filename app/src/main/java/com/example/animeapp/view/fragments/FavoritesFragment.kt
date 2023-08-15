@@ -4,22 +4,18 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.animeapp.R
 import com.example.animeapp.databinding.FragmentFavoritesBinding
 import com.example.animeapp.models.FavoriteData
-import com.example.animeapp.utils.FavoriteMethodsImpl
+import com.example.animeapp.utils.methods.FavoriteMethodsImpl
 import com.example.animeapp.view.adapters.FavoritesAdapter
 import com.example.animeapp.viewmodel.FavoritesViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
