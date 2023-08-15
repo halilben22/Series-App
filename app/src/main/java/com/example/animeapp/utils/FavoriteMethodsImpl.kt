@@ -1,0 +1,107 @@
+package com.example.animeapp.utils
+
+import android.app.Dialog
+import android.content.Context
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
+import android.view.Gravity
+import android.view.ViewGroup
+import android.view.Window
+import android.widget.Button
+import android.widget.EditText
+import android.widget.ImageView
+import android.widget.Toast
+import com.example.animeapp.R
+import com.example.animeapp.models.FavoriteData
+import com.example.animeapp.view.adapters.FavoritesAdapter
+import com.example.animeapp.viewmodel.FavoritesViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Deferred
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+
+
+class FavoriteMethodsImpl : FavoriteMethods {
+   override fun deleteFavorite(position: Int, holder: FavoritesAdapter.FavoritesViewHolder,favoritesViewModel:FavoritesViewModel,favList:List<FavoriteData>) {
+      val favButton = holder.view.findViewById<ImageView>(R.id.heart_button)
+
+      favButton.setOnClickListener {
+
+         favButton.setImageResource(R.drawable.baseline_favorite_border_24)
+         CoroutineScope(Dispatchers.IO).launch {
+            delay(180)
+
+            val job1: Deferred<Unit> = async {
+               favoritesViewModel.deleteFavorite(
+                  favList[position]
+               )
+
+
+            }
+
+            job1.await()
+
+
+         }
+
+
+      }
+   }
+
+   override fun showDialog(position: Int, holder: FavoritesAdapter.FavoritesViewHolder,favoritesViewModel:FavoritesViewModel,favList:List<FavoriteData>,context: Context) {
+      holder.comment_button.setOnClickListener {
+         val dialog = Dialog(context)
+         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+         dialog.setContentView(R.layout.fav_bottom_sheet)
+         val comment_add_btn = dialog.findViewById<Button>(R.id.comment_button)
+         val comment_text = dialog.findViewById<EditText>(R.id.comment_text)
+
+         comment_text.setText(favList[position].comment)
+         dialog.show()
+
+         dialog.window!!.setLayout(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+         )
+         dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+         dialog.window!!.attributes.windowAnimations = R.style.DialogAnimation
+         dialog.window!!.setGravity(Gravity.BOTTOM)
+
+         comment_add_btn.setOnClickListener {
+            CoroutineScope(Dispatchers.IO).launch {
+               favoritesViewModel.updateComment(
+                  comment_text.text.toString(),
+                  favList!![position].id
+               )
+               favoritesViewModel.readFavorites()
+
+
+               withContext(Dispatchers.Main) {
+                  Toast.makeText(
+                     context,
+                     "${favList!![position].name} ile ilgili notunuz eklendi.",
+                     Toast.LENGTH_SHORT
+                  ).show()
+
+               }
+
+
+            }
+
+
+         }
+      }
+   }
+
+   override fun clearAllFavorites(clearButton: Button,favoritesViewModel: FavoritesViewModel) {
+      clearButton.setOnClickListener {
+
+         favoritesViewModel.deleteAllFavorites()
+
+
+      }
+   }
+}

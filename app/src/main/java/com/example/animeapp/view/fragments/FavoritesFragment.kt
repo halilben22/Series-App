@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.animeapp.R
 import com.example.animeapp.databinding.FragmentFavoritesBinding
 import com.example.animeapp.models.FavoriteData
+import com.example.animeapp.utils.FavoriteMethodsImpl
 import com.example.animeapp.view.adapters.FavoritesAdapter
 import com.example.animeapp.viewmodel.FavoritesViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -30,6 +31,7 @@ class FavoritesFragment : Fragment() {
    private var favList: MutableList<FavoriteData> = mutableListOf()
    private lateinit var favoritesAdapter: FavoritesAdapter
    private var job1:Deferred<Unit>?=null
+   private  var favoriteMethodsImpl= FavoriteMethodsImpl()
    private val binding get() = _binding!!
    private val favViewModel by lazy {
       ViewModelProvider(this, defaultViewModelProviderFactory)[FavoritesViewModel::class.java]
@@ -44,7 +46,7 @@ class FavoritesFragment : Fragment() {
       getFavoriteDatas()
 
       val clearButton = binding.clearButton
-      favoritesAdapter = FavoritesAdapter(favViewModel, clearButton,requireActivity())
+      favoritesAdapter = FavoritesAdapter(favViewModel, clearButton,requireActivity(),favoriteMethodsImpl)
 
 
       favViewModel.favoriteObserver().observe(requireActivity()) {

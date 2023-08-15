@@ -11,6 +11,7 @@ import com.example.animeapp.databinding.FragmentSearchBinding
 import com.example.animeapp.models.FavoriteData
 import com.example.animeapp.models.PageData
 import com.example.animeapp.models.PopularSeriesData
+import com.example.animeapp.utils.SeriesAdapterMethodImpl
 import com.example.animeapp.view.adapters.PagesAdapter
 import com.example.animeapp.view.adapters.SeriesAdapter
 import com.example.animeapp.viewmodel.FavoritesViewModel
@@ -35,6 +36,7 @@ class SearchFragment : Fragment() {
    private var favList: MutableList<FavoriteData> = mutableListOf()
    private lateinit var seriesAdapter: SeriesAdapter
    val pagesList: ArrayList<PageData> = arrayListOf()
+   private var seriesAdapterMethodImpl=SeriesAdapterMethodImpl()
    private lateinit var pagesAdapter: PagesAdapter
    private val viewModel by lazy {
       ViewModelProvider(this, defaultViewModelProviderFactory)[SeriesViewModel::class.java]
@@ -77,7 +79,7 @@ class SearchFragment : Fragment() {
 
       viewModel.observeSeries().observe(viewLifecycleOwner) {
          listAllSeries.add(it)
-         seriesAdapter = SeriesAdapter(favViewModel, lifecycle)
+         seriesAdapter = SeriesAdapter(favViewModel, lifecycle,seriesAdapterMethodImpl)
 
          seriesAdapter.setList(listAllSeries, favList)
 
@@ -91,7 +93,7 @@ class SearchFragment : Fragment() {
 
       viewModel.observeSearchSeries().observe(viewLifecycleOwner) {
          listSearched.add(it)
-         seriesAdapter = SeriesAdapter(favViewModel, lifecycle)
+         seriesAdapter = SeriesAdapter(favViewModel, lifecycle,seriesAdapterMethodImpl)
          seriesAdapter.setList(listSearched, favList)
          binding.recyclerSeries.adapter = seriesAdapter
          binding.recyclerSeries.layoutManager =
@@ -156,7 +158,6 @@ class SearchFragment : Fragment() {
 
    override fun onDestroyView() {
       super.onDestroyView()
-
       job1?.cancel()
       job2?.cancel()
    }

@@ -1,39 +1,26 @@
 package com.example.animeapp.view.adapters
 
 import android.annotation.SuppressLint
-import android.app.Dialog
 import android.content.Context
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.Window
 import android.widget.Button
-import android.widget.EditText
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.animeapp.R
 import com.example.animeapp.models.FavoriteData
+import com.example.animeapp.utils.FavoriteMethodsImpl
 import com.example.animeapp.viewmodel.FavoritesViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Deferred
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class FavoritesAdapter constructor(
-   val favoritesViewModel: FavoritesViewModel,
-   val clearButton: Button,
-
-   val context: Context
+   private val favoritesViewModel: FavoritesViewModel,
+   private val clearButton: Button,
+   val context: Context,
+   val favoriteMethodsImpl: FavoriteMethodsImpl
 ) :
    RecyclerView.Adapter<FavoritesAdapter.FavoritesViewHolder>() {
    class FavoritesViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
@@ -84,95 +71,11 @@ class FavoritesAdapter constructor(
    }
 
    override fun onBindViewHolder(holder: FavoritesViewHolder, position: Int) {
+      holder.setIsRecyclable(false)
       holder.bindData(favList!![position])
-      clearAll()
-      deleteFavorite(position, holder)
-      showDialog(holder, position)
-
-   }
-
-   private fun clearAll() {
-
-      clearButton.setOnClickListener {
-
-         favoritesViewModel.deleteAllFavorites()
-
-
-      }
-   }
-
-
-   private fun deleteFavorite(position: Int, holder: FavoritesViewHolder) {
-      val favButton = holder.view.findViewById<ImageView>(R.id.heart_button)
-
-      favButton.setOnClickListener {
-
-         favButton.setImageResource(R.drawable.baseline_favorite_border_24)
-         CoroutineScope(Dispatchers.IO).launch {
-            delay(180)
-
-            val job1: Deferred<Unit> = async {
-               favoritesViewModel.deleteFavorite(
-                  favList!![position]
-               )
-               println(favList!!)
-
-
-            }
-
-            job1.await()
-
-
-         }
-
-
-      }
-
-   }
-
-
-   private fun showDialog(holder: FavoritesViewHolder, position: Int) {
-
-
-      holder.comment_button.setOnClickListener {
-         val dialog = Dialog(context)
-         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-         dialog.setContentView(R.layout.fav_bottom_sheet)
-         val comment_add_btn = dialog.findViewById<Button>(R.id.comment_button)
-         val comment_text = dialog.findViewById<EditText>(R.id.comment_text)
-         comment_text.setText(favList!![position].comment)
-         dialog.show()
-
-         dialog.window!!.setLayout(
-            ViewGroup.LayoutParams.MATCH_PARENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT
-         )
-         dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-         dialog.window!!.attributes.windowAnimations = R.style.DialogAnimation
-         dialog.window!!.setGravity(Gravity.BOTTOM)
-
-         comment_add_btn.setOnClickListener {
-            CoroutineScope(Dispatchers.IO).launch {
-               favoritesViewModel.updateComment(
-                  comment_text.text.toString(),
-                  favList!![position].id
-               )
-               favoritesViewModel.readFavorites()
-               withContext(Dispatchers.Main) {
-                  Toast.makeText(
-                     context,
-                     "${favList!![position].name} ile ilgili notunuz eklendi.",
-                     Toast.LENGTH_SHORT
-                  ).show()
-
-               }
-
-
-            }
-
-
-         }
-      }
+      favoriteMethodsImpl.clearAllFavorites(clearButton, favoritesViewModel)
+      favoriteMethodsImpl.deleteFavorite(position, holder, favoritesViewModel, favList!!)
+      favoriteMethodsImpl.showDialog(position, holder, favoritesViewModel, favList!!, context)
 
    }
 

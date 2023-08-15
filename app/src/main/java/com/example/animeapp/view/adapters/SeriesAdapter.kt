@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.cardview.widget.CardView
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.RecyclerView
@@ -15,14 +14,14 @@ import com.example.animeapp.R
 import com.example.animeapp.models.FavoriteData
 import com.example.animeapp.models.PopularSeriesData
 import com.example.animeapp.models.TvShow
+import com.example.animeapp.utils.SeriesAdapterMethodImpl
 import com.example.animeapp.viewmodel.FavoritesViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Deferred
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
 
-class SeriesAdapter(private val favViewModel: FavoritesViewModel, override val lifecycle: Lifecycle) :
+class SeriesAdapter(
+   private val favViewModel: FavoritesViewModel,
+   override val lifecycle: Lifecycle,
+   val seriesAdapterMethodImpl: SeriesAdapterMethodImpl
+) :
    RecyclerView.Adapter<SeriesAdapter.SeriesViewHolder>(), LifecycleOwner {
 
 
@@ -30,7 +29,7 @@ class SeriesAdapter(private val favViewModel: FavoritesViewModel, override val l
       val textTitle = view.findViewById<TextView>(R.id.textTitle)
       val textDate = view.findViewById<TextView>(R.id.dateTitle)
       val posterImage = view.findViewById<ImageView>(R.id.posterView)
-      val favButton = view.findViewById<ImageView>(R.id.fav_item_logo)//SIKINTI BURDA
+      val favButton = view.findViewById<ImageView>(R.id.fav_item_logo)
 
 
       @SuppressLint("SetTextI18n")
@@ -70,69 +69,11 @@ class SeriesAdapter(private val favViewModel: FavoritesViewModel, override val l
    override fun onBindViewHolder(holder: SeriesViewHolder, position: Int) {
       holder.setIsRecyclable(false)
       holder.bindData(seriesList!![position])
-
-      findFavorite(position, holder)
-      addFavorite(position, holder)
-
-
-   }
-
-
-   private fun findFavorite(position: Int, holder: SeriesViewHolder) {
-
-      for (item in seriesList!!) {
-         for (item2 in favList!!) {
-            if (item.id.toString() == item2.id) {
-               if (position == item2.favPosition) {
-                  holder.favButton.setImageResource(R.drawable.fav_red)
-               }
-            }
-         }
-
-
-      }
+      seriesAdapterMethodImpl.findFavorite(position, holder, seriesList!!, favList!!)
+      seriesAdapterMethodImpl.addFavorite(position, holder, favViewModel, seriesList!!)
 
 
    }
-
-
-   private fun addFavorite(position: Int, holder: SeriesViewHolder) {
-      val favButton = holder.view.findViewById<ImageView>(R.id.fav_item_logo)
-
-      favButton.setOnClickListener {
-         CoroutineScope(Dispatchers.IO).launch {
-
-            val job1: Deferred<Unit> = async {
-               favViewModel.addFavorite(
-                  FavoriteData(
-                     id = seriesList!![position].id.toString(),
-                     name = seriesList!![position].name,
-                     isFavorite = true,
-                     posterLink = seriesList!![position].image_thumbnail_path,
-                     favPosition = position,
-                     start_date = seriesList?.get(position)?.start_date ?: "-",
-                     country = seriesList!![position].country,
-                     status = seriesList!![position].status,
-                     path = seriesList!![position].image_thumbnail_path,
-                     comment = ""
-                  )
-               )
-
-            }
-
-            job1.await()
-
-
-         }
-
-         favButton.setImageResource(R.drawable.fav_red)
-
-      }
-
-   }
-
-
-
 
 
 }

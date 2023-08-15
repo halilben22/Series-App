@@ -16,5 +16,6 @@ data class FavoriteData(
    val country:String,
    val status:String,
    val path:String,
-   val comment:String
+   val comment:String,
+   val rate:String,
 )
