@@ -11,7 +11,7 @@ import javax.inject.Inject
 @HiltViewModel
 class FavoritesViewModel @Inject constructor(private val dao: FavoriteDao) : ViewModel() {
 
-   val allFavorites: MutableLiveData<MutableList<FavoriteData>> = MutableLiveData()
+ val allFavorites: MutableLiveData<MutableList<FavoriteData>> = MutableLiveData()
 
 
    fun favoriteObserver(): MutableLiveData<MutableList<FavoriteData>> {

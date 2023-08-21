@@ -54,6 +54,7 @@ class SeriesAdapter(
       liveData.map { this.seriesList = it.tv_shows }
       this.favList = favList
       notifyDataSetChanged()
+
    }
 
    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SeriesViewHolder {
@@ -66,6 +67,7 @@ class SeriesAdapter(
    }
 
    override fun onBindViewHolder(holder: SeriesViewHolder, position: Int) {
+
       holder.setIsRecyclable(false)
       holder.bindData(seriesList!![position])
       seriesAdapterMethodImpl.findFavorite(position, holder, seriesList!!, favList!!)

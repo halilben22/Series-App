@@ -53,7 +53,7 @@ class FavoriteMethodsImpl : FavoriteMethods {
       }
    }
 
-   override fun showDialog(position: Int, holder: FavoritesAdapter.FavoritesViewHolder,favoritesViewModel:FavoritesViewModel,favList:List<FavoriteData>,context: Context) {
+   override fun showCommentDialog(position: Int, holder: FavoritesAdapter.FavoritesViewHolder,favoritesViewModel:FavoritesViewModel,favList:List<FavoriteData>,context: Context) {
       holder.comment_button.setOnClickListener {
          val dialog = Dialog(context)
          dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)

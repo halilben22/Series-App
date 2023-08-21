@@ -21,7 +21,18 @@
         <item name="android:backgroundTint">@color/purple_darker2</item>
 
     </style>
+    <style name="ThemeSwitchImageColor">
 
+        <item name="android:tint">@color/white</item>
+    </style>
+    <style name="AppTheme.Picker" parent="Theme.AppCompat.Light.NoActionBar" >
+        <item name="android:textColorPrimary">@android:color/black</item>
+    </style>
+    <style name="ThemeSwitchButtonColor">
+
+        <item name="thumbTint">@color/white</item>
+        <item name="trackTint">@color/pink_light</item>
+    </style>
     <style name="CommentCardBackgroundColor">
         <item name="android:color">@color/purple_darker</item>
     </style>

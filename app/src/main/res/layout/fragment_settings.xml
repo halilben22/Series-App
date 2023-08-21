@@ -1,10 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/ScreenBackground"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".view.fragments.SettingsFragment">
 
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/comment_radius"
+    style="@style/CommentBackgroundColor"
+android:layout_gravity="fill_horizontal"
+android:layout_marginTop="25dp"
+    android:layout_marginHorizontal="10dp"
+
+
+    >
+
+
+    <TextView
+        android:id="@+id/textView"
+        style="@style/TextColor"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:gravity="start"
+        android:text="Change app theme"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.517" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="wrap_content"
+
+        android:layout_height="wrap_content"
+
+
+        android:layout_marginEnd="16dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.982"
+        app:layout_constraintStart_toStartOf="@+id/textView"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
+
+        <ImageView
+            style="@style/ThemeSwitchImageColor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/baseline_wb_sunny_24" />
+
+        <androidx.appcompat.widget.SwitchCompat
+
+            android:id="@+id/switch_btn"
+            style="@style/ThemeSwitchButtonColor"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="false" />
+
+
+        <ImageView
+            style="@style/ThemeSwitchImageColor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:src="@drawable/baseline_nightlight_24" />
+
+    </LinearLayout>
+    ></androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>

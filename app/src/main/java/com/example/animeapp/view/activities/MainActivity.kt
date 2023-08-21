@@ -1,7 +1,11 @@
 package com.example.animeapp.view.activities
 
+import android.annotation.SuppressLint
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import com.example.animeapp.R
 import com.example.animeapp.databinding.ActivityMainBinding
 import com.example.animeapp.view.fragments.FavoritesFragment
@@ -13,6 +17,11 @@ private lateinit var binding: ActivityMainBinding
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
+
+
+   private var preferences: SharedPreferences? = null
+
+   @SuppressLint("SuspiciousIndentation")
    override fun onCreate(savedInstanceState: Bundle?) {
 
 
@@ -22,6 +31,21 @@ class MainActivity : AppCompatActivity() {
       binding = ActivityMainBinding.inflate(layoutInflater)
       val view = binding.root
       setContentView(view)
+
+
+
+      preferences = getSharedPreferences("MODE", Context.MODE_PRIVATE)
+
+      val nightMode = preferences?.getBoolean("night", false)!!
+
+      if (nightMode) {
+
+         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+      } else {
+
+         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+      }
+
 
       replaceFragment(SearchFragment())
       binding.bottomNavigationView.setOnItemSelectedListener {
@@ -42,7 +66,6 @@ class MainActivity : AppCompatActivity() {
       }
 
    }
-
 
 
    private fun replaceFragment(fragment: androidx.fragment.app.Fragment) {

@@ -9,6 +9,8 @@
 
     <NumberPicker
         android:id="@+id/dialog_number_picker"
+        android:background="@color/white"
+        android:theme="@style/AppTheme.Picker"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
     <Button
@@ -16,6 +18,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="4dp"
+        style="@style/ButtonColors"
         android:text="Done">
 
     </Button>

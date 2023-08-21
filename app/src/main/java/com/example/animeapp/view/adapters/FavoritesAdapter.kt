@@ -64,6 +64,7 @@ class FavoritesAdapter constructor(
 
       this.favList = favList
       notifyDataSetChanged()
+
    }
 
    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavoritesViewHolder {
@@ -77,11 +78,19 @@ class FavoritesAdapter constructor(
    }
 
    override fun onBindViewHolder(holder: FavoritesViewHolder, position: Int) {
+
       holder.setIsRecyclable(false)
       holder.bindData(favList!![position])
+
       favoriteMethodsImpl.clearAllFavorites(clearButton, favoritesViewModel)
       favoriteMethodsImpl.deleteFavorite(position, holder, favoritesViewModel, favList!!)
-      favoriteMethodsImpl.showDialog(position, holder, favoritesViewModel, favList!!, context)
+      favoriteMethodsImpl.showCommentDialog(
+         position,
+         holder,
+         favoritesViewModel,
+         favList!!,
+         context
+      )
       favoriteMethodsImpl.showRateDialog(position, holder, favoritesViewModel, favList!!, context)
    }
 
