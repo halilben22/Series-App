@@ -16,8 +16,10 @@ import com.example.animeapp.models.PopularSeriesData
 import com.example.animeapp.models.TvShow
 import com.example.animeapp.utils.methods.SeriesAdapterMethodImpl
 import com.example.animeapp.viewmodel.FavoritesViewModel
+import javax.inject.Inject
 
-class SeriesAdapter(
+class SeriesAdapter
+@Inject constructor(
    private val favViewModel: FavoritesViewModel,
    override val lifecycle: Lifecycle,
    private val seriesAdapterMethodImpl: SeriesAdapterMethodImpl
@@ -49,11 +51,11 @@ class SeriesAdapter(
    private var seriesList: List<TvShow>? = null
    private var favList: List<FavoriteData>? = null
 
-   @SuppressLint("NotifyDataSetChanged")
+
    fun setList(liveData: List<PopularSeriesData>, favList: List<FavoriteData>) {
       liveData.map { this.seriesList = it.tv_shows }
       this.favList = favList
-      notifyDataSetChanged()
+
 
    }
 

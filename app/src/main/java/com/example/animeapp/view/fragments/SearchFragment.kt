@@ -35,7 +35,7 @@ class SearchFragment : Fragment() {
    private var listSearched: ArrayList<PopularSeriesData> = arrayListOf()
    private var favList: MutableList<FavoriteData> = mutableListOf()
    private lateinit var seriesAdapter: SeriesAdapter
-   val pagesList: ArrayList<PageData> = arrayListOf()
+   private val pagesList: ArrayList<PageData> = arrayListOf()
    private var seriesAdapterMethodImpl= SeriesAdapterMethodImpl()
    private lateinit var pagesAdapter: PagesAdapter
    private val viewModel by lazy {
@@ -73,7 +73,7 @@ class SearchFragment : Fragment() {
 
       }
 
-      pagesAdapter = PagesAdapter(viewModel, favViewModel, favList)
+      pagesAdapter = PagesAdapter(viewModel, favViewModel)
       pagesAdapter.setList(pagesList)
       binding.recyclerPages.adapter = pagesAdapter
 

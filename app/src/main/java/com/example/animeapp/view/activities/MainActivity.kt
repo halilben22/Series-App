@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.os.Handler
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import com.example.animeapp.R
@@ -12,6 +13,7 @@ import com.example.animeapp.view.fragments.FavoritesFragment
 import com.example.animeapp.view.fragments.SearchFragment
 import com.example.animeapp.view.fragments.SettingsFragment
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
 
 private lateinit var binding: ActivityMainBinding
 
@@ -31,21 +33,7 @@ class MainActivity : AppCompatActivity() {
       binding = ActivityMainBinding.inflate(layoutInflater)
       val view = binding.root
       setContentView(view)
-
-
-
-      preferences = getSharedPreferences("MODE", Context.MODE_PRIVATE)
-
-      val nightMode = preferences?.getBoolean("night", false)!!
-
-      if (nightMode) {
-
-         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-      } else {
-
-         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-      }
-
+      sharedPrefForTheme()
 
       replaceFragment(SearchFragment())
       binding.bottomNavigationView.setOnItemSelectedListener {
@@ -73,6 +61,24 @@ class MainActivity : AppCompatActivity() {
       val fragmentTransaction = fragmentManager.beginTransaction()
       fragmentTransaction.replace(R.id.frame_layout, fragment)
       fragmentTransaction.commit()
+   }
+
+   private fun sharedPrefForTheme() {
+
+
+      preferences = getSharedPreferences("MODE", Context.MODE_PRIVATE)
+
+      val nightMode = preferences?.getBoolean("night", false)!!
+
+      if (nightMode) {
+
+         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+      } else {
+
+         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+      }
+
+
    }
 
 

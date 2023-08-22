@@ -6,6 +6,7 @@ import com.example.animeapp.db.dao.FavoriteDao
 import com.example.animeapp.db.database.FavoriteDatabase
 
 import com.example.animeapp.service.AniApi
+import com.example.animeapp.view.adapters.FavoritesAdapter
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -31,6 +32,7 @@ object AppModule {
    fun getFavDao(appDB:FavoriteDatabase): FavoriteDao {
       return appDB.getDao()
    }
+
 
 
    @Singleton

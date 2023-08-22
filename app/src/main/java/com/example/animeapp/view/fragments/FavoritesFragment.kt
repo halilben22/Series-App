@@ -24,10 +24,9 @@ class FavoritesFragment : Fragment() {
 
 
    private var _binding: FragmentFavoritesBinding? = null
-   private var favList: MutableList<FavoriteData> = mutableListOf()
    private lateinit var favoritesAdapter: FavoritesAdapter
-   private var job1:Deferred<Unit>?=null
-   private  var favoriteMethodsImpl= FavoriteMethodsImpl()
+   private var job1: Deferred<Unit>? = null
+   private var favoriteMethodsImpl = FavoriteMethodsImpl()
    private val binding get() = _binding!!
    private val favViewModel by lazy {
       ViewModelProvider(this, defaultViewModelProviderFactory)[FavoritesViewModel::class.java]
@@ -42,11 +41,12 @@ class FavoritesFragment : Fragment() {
       getFavoriteDatas()
 
       val clearButton = binding.clearButton
-      favoritesAdapter = FavoritesAdapter(favViewModel, clearButton,requireActivity(),favoriteMethodsImpl)
+      favoritesAdapter =
+         FavoritesAdapter(favViewModel, clearButton, requireActivity(), favoriteMethodsImpl)
 
 
       favViewModel.favoriteObserver().observe(requireActivity()) {
-         favList = it
+         favoritesAdapter.differ.submitList(it)
          makeFavAdapter()
       }
       return view
@@ -66,8 +66,9 @@ class FavoritesFragment : Fragment() {
    }
 
    private fun makeFavAdapter() {
-      favoritesAdapter.setList(favList)
+
       binding.recyclerFavs.adapter = favoritesAdapter
+
       binding.recyclerFavs.layoutManager =
          LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
    }
@@ -76,11 +77,13 @@ class FavoritesFragment : Fragment() {
       super.onDestroy()
       job1?.cancel()
    }
+
    override fun onDestroyView() {
       super.onDestroyView()
       job1?.cancel()
 
    }
+
 
 
 }

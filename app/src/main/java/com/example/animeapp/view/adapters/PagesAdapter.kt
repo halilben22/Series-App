@@ -9,7 +9,6 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.animeapp.R
-import com.example.animeapp.models.FavoriteData
 import com.example.animeapp.models.PageData
 import com.example.animeapp.viewmodel.FavoritesViewModel
 import com.example.animeapp.viewmodel.SeriesViewModel
@@ -18,11 +17,12 @@ import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class PagesAdapter(
+class PagesAdapter
+@Inject constructor(
    val viewModel: SeriesViewModel,
-   val favViewModel: FavoritesViewModel,
-val favList:MutableList<FavoriteData>
+   val favViewModel: FavoritesViewModel
 ) :
    RecyclerView.Adapter<PagesAdapter.PagesViewHolder>() {
    class PagesViewHolder(val view: View) : RecyclerView.ViewHolder(view) {

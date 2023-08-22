@@ -27,15 +27,19 @@ import kotlinx.coroutines.withContext
 
 
 class FavoriteMethodsImpl : FavoriteMethods {
-   override fun deleteFavorite(position: Int, holder: FavoritesAdapter.FavoritesViewHolder,favoritesViewModel:FavoritesViewModel,favList:List<FavoriteData>) {
+
+   override fun deleteFavorite(
+      position: Int,
+      holder: FavoritesAdapter.FavoritesViewHolder,
+      favoritesViewModel: FavoritesViewModel,
+      favList: List<FavoriteData>,
+
+   ) {
       val favButton = holder.view.findViewById<ImageView>(R.id.heart_button)
-
       favButton.setOnClickListener {
-
          favButton.setImageResource(R.drawable.baseline_favorite_border_24)
          CoroutineScope(Dispatchers.IO).launch {
-            delay(180)
-
+            delay(100)
             val job1: Deferred<Unit> = async {
                favoritesViewModel.deleteFavorite(
                   favList[position]
@@ -53,7 +57,13 @@ class FavoriteMethodsImpl : FavoriteMethods {
       }
    }
 
-   override fun showCommentDialog(position: Int, holder: FavoritesAdapter.FavoritesViewHolder,favoritesViewModel:FavoritesViewModel,favList:List<FavoriteData>,context: Context) {
+   override fun showCommentDialog(
+      position: Int,
+      holder: FavoritesAdapter.FavoritesViewHolder,
+      favoritesViewModel: FavoritesViewModel,
+      favList: List<FavoriteData>,
+      context: Context
+   ) {
       holder.comment_button.setOnClickListener {
          val dialog = Dialog(context)
          dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -98,7 +108,7 @@ class FavoriteMethodsImpl : FavoriteMethods {
       }
    }
 
-   override fun clearAllFavorites(clearButton: Button,favoritesViewModel: FavoritesViewModel) {
+   override fun clearAllFavorites(clearButton: Button, favoritesViewModel: FavoritesViewModel) {
       clearButton.setOnClickListener {
 
          favoritesViewModel.deleteAllFavorites()
