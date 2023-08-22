@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.os.Handler
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import com.example.animeapp.R
@@ -13,7 +12,6 @@ import com.example.animeapp.view.fragments.FavoritesFragment
 import com.example.animeapp.view.fragments.SearchFragment
 import com.example.animeapp.view.fragments.SettingsFragment
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.delay
 
 private lateinit var binding: ActivityMainBinding
 

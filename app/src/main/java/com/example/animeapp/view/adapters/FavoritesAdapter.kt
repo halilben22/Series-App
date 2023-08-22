@@ -63,9 +63,7 @@ class FavoritesAdapter
 
 
    }
-fun updateData(position: Int){
-   notifyItemChanged(position)
-}
+
    private var differCallback = object : DiffUtil.ItemCallback<FavoriteData>() {
 
       override fun areItemsTheSame(oldItem: FavoriteData, newItem: FavoriteData): Boolean {
@@ -95,30 +93,13 @@ fun updateData(position: Int){
    }
 
    override fun onBindViewHolder(holder: FavoritesViewHolder, position: Int) {
-
-
-
       holder.bindData(differ.currentList[position])
-
       favoriteMethodsImpl.clearAllFavorites(clearButton, favoritesViewModel)
       favoriteMethodsImpl.deleteFavorite(position, holder, favoritesViewModel, differ.currentList)
-      favoriteMethodsImpl.showCommentDialog(
-         position,
-         holder,
-         favoritesViewModel,
-         differ.currentList,
-         context
-      )
+      favoriteMethodsImpl.showCommentDialog(position, holder, favoritesViewModel, differ.currentList, context)
 
 
-      favoriteMethodsImpl.showRateDialog(
-         position,
-         holder,
-         favoritesViewModel,
-         differ.currentList,
-         context
-      )
-
+      favoriteMethodsImpl.showRateDialog(position, holder, favoritesViewModel, differ.currentList, context)
 
    }
 
