@@ -21,6 +21,14 @@ dark/light theme option
 
 # Series-App
 
+
+
+
+# ---ScreenShoots---
+
+
+
+
 ![WhatsApp Görsel 2023-09-04 4saat 11 04 38](https://github.com/halilben22/Series-App/assets/109038096/f52b187d-4ba2-4020-900d-c9d9df81a8dd )
 
 ![WhatsApp Görsel 2023-09-04 4saat 11 04 37](https://github.com/halilben22/Series-App/assets/109038096/3dd25253-edfe-490f-a89f-d47d014dfb45)
