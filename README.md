@@ -24,7 +24,7 @@ dark/light theme option
 
 
 
-# ---ScreenShoots---
+# ---Screenshoots---
 
 
 
