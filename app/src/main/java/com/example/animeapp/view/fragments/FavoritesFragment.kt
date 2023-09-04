@@ -8,7 +8,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.animeapp.databinding.FragmentFavoritesBinding
-import com.example.animeapp.models.FavoriteData
 import com.example.animeapp.utils.methods.FavoriteMethodsImpl
 import com.example.animeapp.view.adapters.FavoritesAdapter
 import com.example.animeapp.viewmodel.FavoritesViewModel
@@ -68,7 +67,7 @@ class FavoritesFragment : Fragment() {
    private fun makeFavAdapter() {
 
       binding.recyclerFavs.adapter = favoritesAdapter
-
+      binding.recyclerFavs.setHasFixedSize(true)
       binding.recyclerFavs.layoutManager =
          LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
    }
@@ -83,7 +82,6 @@ class FavoritesFragment : Fragment() {
       job1?.cancel()
 
    }
-
 
 
 }

@@ -13,6 +13,7 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.NumberPicker
 import android.widget.Toast
+import androidx.recyclerview.widget.AsyncListDiffer
 import com.example.animeapp.R
 import com.example.animeapp.models.FavoriteData
 import com.example.animeapp.view.adapters.FavoritesAdapter
@@ -33,6 +34,8 @@ class FavoriteMethodsImpl : FavoriteMethods {
       holder: FavoritesAdapter.FavoritesViewHolder,
       favoritesViewModel: FavoritesViewModel,
       favList: List<FavoriteData>,
+      differ: AsyncListDiffer<FavoriteData>
+
 
    ) {
       val favButton = holder.view.findViewById<ImageView>(R.id.heart_button)
@@ -43,7 +46,9 @@ class FavoriteMethodsImpl : FavoriteMethods {
             val job1: Deferred<Unit> = async {
                favoritesViewModel.deleteFavorite(
                   favList[position]
+
                )
+               favoritesViewModel.readFavoritesWithDiffer(differ = differ)
 
 
             }
@@ -62,7 +67,8 @@ class FavoriteMethodsImpl : FavoriteMethods {
       holder: FavoritesAdapter.FavoritesViewHolder,
       favoritesViewModel: FavoritesViewModel,
       favList: List<FavoriteData>,
-      context: Context
+      context: Context,
+      differ: AsyncListDiffer<FavoriteData>
    ) {
       holder.comment_button.setOnClickListener {
          val dialog = Dialog(context)
@@ -88,10 +94,11 @@ class FavoriteMethodsImpl : FavoriteMethods {
                   comment_text.text.toString(),
                   favList[position].id
                )
-               favoritesViewModel.readFavorites()
+               favoritesViewModel.readFavoritesWithDiffer(differ)
 
 
                withContext(Dispatchers.Main) {
+                  dialog.cancel()
                   Toast.makeText(
                      context,
                      "${favList[position].name} ile ilgili notunuz eklendi.",
@@ -108,10 +115,11 @@ class FavoriteMethodsImpl : FavoriteMethods {
       }
    }
 
-   override fun clearAllFavorites(clearButton: Button, favoritesViewModel: FavoritesViewModel) {
+   override fun clearAllFavorites(clearButton: Button, favoritesViewModel: FavoritesViewModel,differ: AsyncListDiffer<FavoriteData>) {
       clearButton.setOnClickListener {
 
          favoritesViewModel.deleteAllFavorites()
+         favoritesViewModel.readFavoritesWithDiffer(differ)
 
 
       }
@@ -122,7 +130,8 @@ class FavoriteMethodsImpl : FavoriteMethods {
       holder: FavoritesAdapter.FavoritesViewHolder,
       favoritesViewModel: FavoritesViewModel,
       favList: List<FavoriteData>,
-      context: Context
+      context: Context,
+      differ: AsyncListDiffer<FavoriteData>
    ) {
       holder.rate_button.setOnClickListener {
          val builder = Dialog(context)
@@ -140,8 +149,12 @@ class FavoriteMethodsImpl : FavoriteMethods {
 
             done_button.setOnClickListener {
 
-               favoritesViewModel.updateRate(numberPicker.value.toString(), favList!![position].id)
-               favoritesViewModel.readFavorites()
+              CoroutineScope(Dispatchers.IO).launch{
+
+                 favoritesViewModel.updateRate(numberPicker.value.toString(), favList[position].id)
+                 favoritesViewModel.readFavoritesWithDiffer(differ)
+              }
+
 
                cancel()
             }

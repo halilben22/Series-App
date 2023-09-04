@@ -17,9 +17,6 @@ import com.example.animeapp.R
 import com.example.animeapp.models.FavoriteData
 import com.example.animeapp.utils.methods.FavoriteMethodsImpl
 import com.example.animeapp.viewmodel.FavoritesViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
@@ -29,6 +26,7 @@ class FavoritesAdapter
    private val clearButton: Button,
    val context: Context,
    private val favoriteMethodsImpl: FavoriteMethodsImpl,
+
 
    ) :
    RecyclerView.Adapter<FavoritesAdapter.FavoritesViewHolder>() {
@@ -94,12 +92,35 @@ class FavoritesAdapter
 
    override fun onBindViewHolder(holder: FavoritesViewHolder, position: Int) {
       holder.bindData(differ.currentList[position])
-      favoriteMethodsImpl.clearAllFavorites(clearButton, favoritesViewModel)
-      favoriteMethodsImpl.deleteFavorite(position, holder, favoritesViewModel, differ.currentList)
-      favoriteMethodsImpl.showCommentDialog(position, holder, favoritesViewModel, differ.currentList, context)
+
+      favoriteMethodsImpl.clearAllFavorites(clearButton, favoritesViewModel,differ)
+
+      favoriteMethodsImpl.deleteFavorite(
+         position,
+         holder,
+         favoritesViewModel,
+         differ.currentList,
+         differ
+      )
+
+      favoriteMethodsImpl.showCommentDialog(
+         position,
+         holder,
+         favoritesViewModel,
+         differ.currentList,
+         context,
+         differ
+      )
 
 
-      favoriteMethodsImpl.showRateDialog(position, holder, favoritesViewModel, differ.currentList, context)
+      favoriteMethodsImpl.showRateDialog(
+         position,
+         holder,
+         favoritesViewModel,
+         differ.currentList,
+         context,
+         differ
+      )
 
    }
 
