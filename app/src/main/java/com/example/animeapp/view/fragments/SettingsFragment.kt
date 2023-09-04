@@ -34,25 +34,24 @@ class SettingsFragment : Fragment() {
 
       val view = binding.root
 
-      val switch_btn=binding.switchBtn
+      val switch_btn = binding.switchBtn
       sharedPreferences = this.activity?.getSharedPreferences("MODE", Context.MODE_PRIVATE)
-      val editor=   sharedPreferences!!.edit()
-      val mode_theme= sharedPreferences?.getBoolean("night", false)!!
+      val editor = sharedPreferences!!.edit()
+      val mode_theme = sharedPreferences?.getBoolean("night", false)!!
       switch_btn.isChecked = mode_theme
 
       switch_btn.setOnCheckedChangeListener { compoundButton, _ ->
          try {
             if (compoundButton.isChecked) {
-CoroutineScope(Dispatchers.IO).launch {
-   editor?.putBoolean("night", true)
-   delay(100)
+               CoroutineScope(Dispatchers.IO).launch {
+                  editor?.putBoolean("night", true)
+                  delay(100)
 
-   withContext(Dispatchers.Main){
-      AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-   }
+                  withContext(Dispatchers.Main) {
+                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                  }
 
-}
-
+               }
 
 
             } else {
@@ -60,13 +59,11 @@ CoroutineScope(Dispatchers.IO).launch {
                   editor?.putBoolean("night", false)
                   delay(100)
 
-                  withContext(Dispatchers.Main){
+                  withContext(Dispatchers.Main) {
                      AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
                   }
 
                }
-
-
 
 
             }

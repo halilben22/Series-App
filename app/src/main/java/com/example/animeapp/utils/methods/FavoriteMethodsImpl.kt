@@ -115,7 +115,11 @@ class FavoriteMethodsImpl : FavoriteMethods {
       }
    }
 
-   override fun clearAllFavorites(clearButton: Button, favoritesViewModel: FavoritesViewModel,differ: AsyncListDiffer<FavoriteData>) {
+   override fun clearAllFavorites(
+      clearButton: Button,
+      favoritesViewModel: FavoritesViewModel,
+      differ: AsyncListDiffer<FavoriteData>
+   ) {
       clearButton.setOnClickListener {
 
          favoritesViewModel.deleteAllFavorites()
@@ -149,11 +153,26 @@ class FavoriteMethodsImpl : FavoriteMethods {
 
             done_button.setOnClickListener {
 
-              CoroutineScope(Dispatchers.IO).launch{
+               CoroutineScope(Dispatchers.IO).launch {
 
-                 favoritesViewModel.updateRate(numberPicker.value.toString(), favList[position].id)
-                 favoritesViewModel.readFavoritesWithDiffer(differ)
-              }
+                  val job1: Deferred<Unit> = async {
+                     favoritesViewModel.updateRate(
+                        numberPicker.value.toString(),
+                        favList[position].id
+                     )
+
+                  }
+
+
+
+
+
+                  job1.await()
+
+                  favoritesViewModel.readFavoritesWithDiffer(differ)
+               }
+
+
 
 
                cancel()

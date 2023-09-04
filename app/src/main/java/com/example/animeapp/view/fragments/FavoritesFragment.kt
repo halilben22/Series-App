@@ -37,8 +37,8 @@ class FavoritesFragment : Fragment() {
    ): View? {
       _binding = FragmentFavoritesBinding.inflate(inflater, container, false)
       val view = binding.root
-      getFavoriteDatas()
 
+      getFavoriteDatas()
       val clearButton = binding.clearButton
       favoritesAdapter =
          FavoritesAdapter(favViewModel, clearButton, requireActivity(), favoriteMethodsImpl)
